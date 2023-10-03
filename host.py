@@ -7,7 +7,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 cover_art_path = 'cover_art/'
 bmp_cover_art_path = 'cover_art/bmp/'
 
-lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
+lz_uri = 'spotify:artist:3TVXtAsR1Inumwj472S9r4'
 
 spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
 results = spotify.artist_top_tracks(lz_uri)
@@ -22,7 +22,7 @@ def download_cover_art(url, filename):
 
 # Convert downloaded image to a 32x32 pixel bmp image
 def convert_cover_art_to_32x32_bmp(filename):
-    img = Image.open(filename)
+    img = Image.open(cover_art_path+filename)
     img = img.resize((32, 32))
     img.save(bmp_cover_art_path + filename + '32x32.bmp')
 
@@ -36,6 +36,6 @@ for track in results['tracks'][:10]:
     print('cover art: ' + cover_art_url)
 
     download_cover_art(cover_art_url, track_name_for_filename)
-    convert_cover_art_to_32x32_bmp(track['name'] + '.jpg')
+    convert_cover_art_to_32x32_bmp(track_name_for_filename)
     print()
 
